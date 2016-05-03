@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+    </style>
+
+    <style name="AppTheme.Dark" parent="android:Theme.DeviceDefault.NoActionBar">
+    </style>
+</resources>
