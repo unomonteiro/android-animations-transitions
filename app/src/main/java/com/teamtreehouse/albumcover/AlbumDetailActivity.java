@@ -1,5 +1,8 @@
 package com.teamtreehouse.albumcover;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.res.ColorStateList;
@@ -18,6 +21,8 @@ import android.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -54,17 +59,45 @@ public class AlbumDetailActivity extends Activity {
     }
 
     private void animate() {
-        fab.setScaleX(0);
+        /*fab.setScaleX(0);
         fab.setScaleY(0);
-        fab.animate().scaleX(1).scaleY(1).start();
+        fab.animate().scaleX(1).scaleY(1).start();*/
+
+//        ObjectAnimator scalex = ObjectAnimator.ofFloat(fab, "scaleX", 0, 1);
+//        ObjectAnimator scaley = ObjectAnimator.ofFloat(fab, "scaleY", 0, 1);
+//        AnimatorSet scaleFab = new AnimatorSet();
+//        scaleFab.playTogether(scalex,scaley);
+
+        Animator scaleFab = AnimatorInflater.loadAnimator(this, R.animator.scale);
+        scaleFab.setTarget(fab);
 
         int titleStartValue = titlePanel.getTop();
         int titleEndValue = titlePanel.getBottom();
-        ObjectAnimator.ofInt(titlePanel, "bottom", titleStartValue, titleEndValue).start();
+        // ObjectAnimator.ofInt(titlePanel, "bottom", titleStartValue, titleEndValue).start();
+        ObjectAnimator animatorTitle = ObjectAnimator.ofInt(titlePanel, "bottom", titleStartValue, titleEndValue);
+        animatorTitle.setInterpolator(new AccelerateInterpolator());
 
         int trackStartValue = trackPanel.getTop();
         int trackEndValue = trackPanel.getBottom();
-        ObjectAnimator.ofInt(trackPanel, "bottom", trackStartValue, trackEndValue).start();
+        // ObjectAnimator.ofInt(trackPanel, "bottom", trackStartValue, trackEndValue).start();
+        ObjectAnimator animatorTrack = ObjectAnimator.ofInt(trackPanel, "bottom", trackStartValue, trackEndValue);
+        animatorTrack.setInterpolator(new DecelerateInterpolator());
+
+        // set initial position to avoid flickering
+        titlePanel.setBottom(titleStartValue);
+        trackPanel.setBottom(titleStartValue);
+        fab.setScaleX(0);
+        fab.setScaleY(0);
+
+        // setting duration of animations
+//        animatorTitle.setDuration(1000);
+//        animatorTrack.setDuration(1000);
+//        animatorTitle.setStartDelay(1000);
+
+        AnimatorSet set = new AnimatorSet();
+        set.playSequentially(animatorTitle, animatorTrack, scaleFab);
+        set.start();
+
     }
 
     private Transition createTransition() {
@@ -90,6 +123,7 @@ public class AlbumDetailActivity extends Activity {
         return set;
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.album_art)
     public void onAlbumArtClick(View view) {
         /*Transition transition = createTransition();
@@ -100,15 +134,31 @@ public class AlbumDetailActivity extends Activity {
         animate();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.track_panel)
     public void onTrackPanelClicked(View view) {
-        if (mCurrentScene == mExpandedScene) {
+        ViewGroup transitionRoot = detailContainer;
+        Scene expandedScene = Scene.getSceneForLayout(transitionRoot,
+                R.layout.activity_album_detail_expanded, view.getContext());
+
+        expandedScene.setEnterAction(new Runnable() {
+            @Override
+            public void run() {
+                ButterKnife.bind(AlbumDetailActivity.this);
+                populate();
+            }
+        });
+
+
+        TransitionManager.go(expandedScene, new ChangeBounds());
+
+        /*if (mCurrentScene == mExpandedScene) {
             mCurrentScene = mCollapsedScene;
         }
         else {
             mCurrentScene = mExpandedScene;
         }
-        mTransitionManager.transitionTo(mCurrentScene);
+        mTransitionManager.transitionTo(mCurrentScene);*/
     }
 
     private void setupTransitions() {
