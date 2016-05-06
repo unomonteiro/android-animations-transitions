@@ -137,28 +137,14 @@ public class AlbumDetailActivity extends Activity {
     @SuppressWarnings("unused")
     @OnClick(R.id.track_panel)
     public void onTrackPanelClicked(View view) {
-        ViewGroup transitionRoot = detailContainer;
-        Scene expandedScene = Scene.getSceneForLayout(transitionRoot,
-                R.layout.activity_album_detail_expanded, view.getContext());
+        //setupTransitions();
 
-        expandedScene.setEnterAction(new Runnable() {
-            @Override
-            public void run() {
-                ButterKnife.bind(AlbumDetailActivity.this);
-                populate();
-            }
-        });
-
-
-        TransitionManager.go(expandedScene, new ChangeBounds());
-
-        /*if (mCurrentScene == mExpandedScene) {
+        if (mCurrentScene == mExpandedScene) {
             mCurrentScene = mCollapsedScene;
-        }
-        else {
+        } else {
             mCurrentScene = mExpandedScene;
         }
-        mTransitionManager.transitionTo(mCurrentScene);*/
+        mTransitionManager.transitionTo(mCurrentScene);
     }
 
     private void setupTransitions() {
