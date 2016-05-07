@@ -36,16 +36,3 @@ public class Fold extends Visibility {
         return animator;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

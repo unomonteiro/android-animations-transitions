@@ -1,28 +1,18 @@
 package com.teamtreehouse.albumcover;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.graphics.Palette;
 import android.transition.ChangeBounds;
 import android.transition.Fade;
 import android.transition.Scene;
-import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -58,47 +48,48 @@ public class AlbumDetailActivity extends Activity {
         setupTransitions();
     }
 
-    private void animate() {
-        /*fab.setScaleX(0);
-        fab.setScaleY(0);
-        fab.animate().scaleX(1).scaleY(1).start();*/
+    //    private void animate() {
+//        /*fab.setScaleX(0);
+//        fab.setScaleY(0);
+//        fab.animate().scaleX(1).scaleY(1).start();*/
+//
+////        ObjectAnimator scalex = ObjectAnimator.ofFloat(fab, "scaleX", 0, 1);
+////        ObjectAnimator scaley = ObjectAnimator.ofFloat(fab, "scaleY", 0, 1);
+////        AnimatorSet scaleFab = new AnimatorSet();
+////        scaleFab.playTogether(scalex,scaley);
+//
+//        Animator scaleFab = AnimatorInflater.loadAnimator(this, R.animator.scale);
+//        scaleFab.setTarget(fab);
+//
+//        int titleStartValue = titlePanel.getTop();
+//        int titleEndValue = titlePanel.getBottom();
+//        // ObjectAnimator.ofInt(titlePanel, "bottom", titleStartValue, titleEndValue).start();
+//        ObjectAnimator animatorTitle = ObjectAnimator.ofInt(titlePanel, "bottom", titleStartValue, titleEndValue);
+//        animatorTitle.setInterpolator(new AccelerateInterpolator());
+//
+//        int trackStartValue = trackPanel.getTop();
+//        int trackEndValue = trackPanel.getBottom();
+//        // ObjectAnimator.ofInt(trackPanel, "bottom", trackStartValue, trackEndValue).start();
+//        ObjectAnimator animatorTrack = ObjectAnimator.ofInt(trackPanel, "bottom", trackStartValue, trackEndValue);
+//        animatorTrack.setInterpolator(new DecelerateInterpolator());
+//
+//        // set initial position to avoid flickering
+//        titlePanel.setBottom(titleStartValue);
+//        trackPanel.setBottom(titleStartValue);
+//        fab.setScaleX(0);
+//        fab.setScaleY(0);
+//
+//        // setting duration of animations
+////        animatorTitle.setDuration(1000);
+////        animatorTrack.setDuration(1000);
+////        animatorTitle.setStartDelay(1000);
+//
+//        AnimatorSet set = new AnimatorSet();
+//        set.playSequentially(animatorTitle, animatorTrack, scaleFab);
+//        set.start();
+//
+//    }
 
-//        ObjectAnimator scalex = ObjectAnimator.ofFloat(fab, "scaleX", 0, 1);
-//        ObjectAnimator scaley = ObjectAnimator.ofFloat(fab, "scaleY", 0, 1);
-//        AnimatorSet scaleFab = new AnimatorSet();
-//        scaleFab.playTogether(scalex,scaley);
-
-        Animator scaleFab = AnimatorInflater.loadAnimator(this, R.animator.scale);
-        scaleFab.setTarget(fab);
-
-        int titleStartValue = titlePanel.getTop();
-        int titleEndValue = titlePanel.getBottom();
-        // ObjectAnimator.ofInt(titlePanel, "bottom", titleStartValue, titleEndValue).start();
-        ObjectAnimator animatorTitle = ObjectAnimator.ofInt(titlePanel, "bottom", titleStartValue, titleEndValue);
-        animatorTitle.setInterpolator(new AccelerateInterpolator());
-
-        int trackStartValue = trackPanel.getTop();
-        int trackEndValue = trackPanel.getBottom();
-        // ObjectAnimator.ofInt(trackPanel, "bottom", trackStartValue, trackEndValue).start();
-        ObjectAnimator animatorTrack = ObjectAnimator.ofInt(trackPanel, "bottom", trackStartValue, trackEndValue);
-        animatorTrack.setInterpolator(new DecelerateInterpolator());
-
-        // set initial position to avoid flickering
-        titlePanel.setBottom(titleStartValue);
-        trackPanel.setBottom(titleStartValue);
-        fab.setScaleX(0);
-        fab.setScaleY(0);
-
-        // setting duration of animations
-//        animatorTitle.setDuration(1000);
-//        animatorTrack.setDuration(1000);
-//        animatorTitle.setStartDelay(1000);
-
-        AnimatorSet set = new AnimatorSet();
-        set.playSequentially(animatorTitle, animatorTrack, scaleFab);
-        set.start();
-
-    }
 
     private Transition createTransition() {
         TransitionSet set = new TransitionSet();
@@ -126,12 +117,12 @@ public class AlbumDetailActivity extends Activity {
     @SuppressWarnings("unused")
     @OnClick(R.id.album_art)
     public void onAlbumArtClick(View view) {
-        /*Transition transition = createTransition();
+        // createTransition();
+        Transition transition = createTransition();
         TransitionManager.beginDelayedTransition(detailContainer, transition);
         fab.setVisibility(View.INVISIBLE);
         titlePanel.setVisibility(View.INVISIBLE);
-        trackPanel.setVisibility(View.INVISIBLE);*/
-        animate();
+        trackPanel.setVisibility(View.INVISIBLE);
     }
 
     @SuppressWarnings("unused")
