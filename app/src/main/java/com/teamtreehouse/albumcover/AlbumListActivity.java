@@ -1,8 +1,10 @@
 package com.teamtreehouse.albumcover;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +32,7 @@ public class AlbumListActivity extends Activity {
         populate();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupTransitions() {
 //        getWindow().setExitTransition(new Explode());
     }

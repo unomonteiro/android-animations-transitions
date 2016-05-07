@@ -1,16 +1,21 @@
 package com.teamtreehouse.albumcover;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.graphics.Palette;
 import android.transition.ChangeBounds;
 import android.transition.Fade;
 import android.transition.Scene;
+import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -138,11 +143,16 @@ public class AlbumDetailActivity extends Activity {
         mTransitionManager.transitionTo(mCurrentScene);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupTransitions() {
-//        Slide slide = new Slide(Gravity.BOTTOM);
-//        slide.excludeTarget(android.R.id.statusBarBackground, true);
-//        getWindow().setEnterTransition(slide);
-//        getWindow().setSharedElementsUseOverlay(false);
+//        getWindow().setEnterTransition(new Slide(Gravity.RIGHT));
+//        getWindow().setReturnTransition(new Fade());
+
+        Slide slide = new Slide(Gravity.BOTTOM);
+        slide.excludeTarget(android.R.id.statusBarBackground, true);
+        getWindow().setEnterTransition(slide);
+        // avoid overlay above fab button
+        getWindow().setSharedElementsUseOverlay(false);
 
         mTransitionManager = new TransitionManager();
         ViewGroup transitionRoot = detailContainer;
@@ -200,15 +210,30 @@ public class AlbumDetailActivity extends Activity {
         mTransitionManager.setTransition(mCollapsedScene, mExpandedScene, expandTransitionSet);
         mCollapsedScene.enter();
 
-//        postponeEnterTransition();
+        // postponeEnterTransition();
     }
 
     private void populate() {
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int albumArtResId = getIntent().getIntExtra(EXTRA_ALBUM_ART_RESID, R.drawable.mean_something_kinder_than_wolves);
+                albumArtView.setImageResource(albumArtResId);
+
+                Bitmap albumBitmap = getReducedBitmap(albumArtResId);
+                colorizeFromImage(albumBitmap);
+
+//                startPostponedEnterTransition();
+            }
+        }, 1000);*/
+
         int albumArtResId = getIntent().getIntExtra(EXTRA_ALBUM_ART_RESID, R.drawable.mean_something_kinder_than_wolves);
         albumArtView.setImageResource(albumArtResId);
 
         Bitmap albumBitmap = getReducedBitmap(albumArtResId);
         colorizeFromImage(albumBitmap);
+
+
     }
 
     private Bitmap getReducedBitmap(int albumArtResId) {
